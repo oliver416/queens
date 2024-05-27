@@ -24,4 +24,11 @@ func main() {
 
 	arr = []int{3, 1, 2, 2, 3, 1, 4, 2}
     fmt.Println(array.BubbleSort(arr))
+
+    arr1 := []int{1, 2, 2, 3, 4}
+    arr2 := []int{1, 2, 3}
+    fmt.Println(array.Merge(arr1, arr2))
+
+	arr = []int{3, 1, 2, 2, 3, 1, 4, 2}
+    fmt.Println(array.MergeSort(arr))
 }
