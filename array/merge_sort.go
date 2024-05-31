@@ -22,10 +22,6 @@ func MergeSort(nums []int) []int {
         return nums
     }
 
-    if len(nums) == 2 {
-        return Merge(nums[:1], nums[1:])
-    }
-
     half := len(nums) / 2
 
     return Merge(
