@@ -27,9 +27,3 @@ func (b *Board) Show() {
 		fmt.Println(field)
 	}
 }
-
-//func main() {
-//board := Board{}
-//board.Init(8)
-//board.Show()
-//}
