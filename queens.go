@@ -65,3 +65,29 @@ func (b *Board) Place(x int, y int) {
 		b.horizontals[x][y] = 8
 	}
 }
+
+func (b *Board) Sum () int {
+	sum := 0
+
+	for _, horisontal := range b.horizontals {
+		for _, field := range horisontal {
+			sum += field
+		}
+	}
+
+	return sum
+}
+
+func (b *Board) FreeFields() [][]int{
+	free_fields := [][]int{}
+
+	for x, horisontal := range b.horizontals {
+		for y, field := range horisontal {
+			if (field == 0)	{
+				coords := []int{x, y}
+				free_fields = append(free_fields, coords)
+			}
+		}
+	}
+	return free_fields
+}
