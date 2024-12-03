@@ -1,19 +1,25 @@
 package main
 
-import "fmt"
+
+func traverse(board Board) {
+	if board.IsWin() {
+		board.Show()
+		return
+	}
+
+	fields := board.FreeFields()
+
+	for _, field := range fields {
+		x, y := field[0], field[1]
+		copy_board := board.Copy()
+		copy_board.Place(x, y)
+		traverse(copy_board)
+	}
+}
 
 
 func main() {
 	board := Board{}
 	board.Init(8)
-	// TODO: cover it with tests
-	// board.Place(3,4)
-	board.Place(7, 2)
-	board.Show()
-
-	sum := board.Sum()
-	fmt.Println(sum)
-
-	fields := board.FreeFields()
-	fmt.Println(fields)
+	traverse(board)
 }
