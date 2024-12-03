@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 const QUEEN = 8
@@ -123,4 +124,19 @@ func (b *Board) Copy() Board {
 
 func (b *Board) IsWin() bool {
 	return b.sum() == b.size * QUEEN + b.size * (b.size - 1)
+}
+
+func (b *Board) Hash() string {
+	builder := strings.Builder{}
+
+	for _, horisontal := range b.horizontals {
+		for _, field := range horisontal {
+			if field == QUEEN {
+				builder.WriteString("1")
+			}
+			builder.WriteString("0")
+		}
+	}
+
+	return builder.String()
 }
