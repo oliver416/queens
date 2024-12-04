@@ -3,7 +3,9 @@ package main
 
 import "fmt"
 
-func traverse(board Board, solutions map[string]Board) {
+func traverse(board Board, solutions map[string]Board, counter *int) {
+	*counter += 1
+
 	if board.IsWin() {
 		hash := board.Hash()
 
@@ -19,7 +21,7 @@ func traverse(board Board, solutions map[string]Board) {
 		x, y := field[0], field[1]
 		copy_board := board.Copy()
 		copy_board.Place(x, y)
-		traverse(copy_board, solutions)
+		traverse(copy_board, solutions, counter)
 	}
 }
 
@@ -28,11 +30,12 @@ func main() {
 	board.Init(8)
 
 	solutions := map[string]Board{}
-	traverse(board, solutions)
+	counter := 0
+	traverse(board, solutions, &counter)
 
 	for _, board := range solutions {
 		board.Show()
 	}
 
-	fmt.Printf("%d solitions found\n", len(solutions))
+	fmt.Printf("%d solitions found, %d iterations\n", len(solutions), counter)
 }
