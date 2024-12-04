@@ -6,21 +6,22 @@ import "fmt"
 func traverse(board Board, solutions map[string]Board, counter *int) {
 	*counter += 1
 
-	if board.IsWin() {
-		hash := board.Hash()
-
-		if _, exists := solutions[hash]; !exists {
-			solutions[hash] = board
-		}
-		return
-	}
-
 	fields := board.FreeFields()
 
 	for _, field := range fields {
 		x, y := field[0], field[1]
 		copy_board := board.Copy()
 		copy_board.Place(x, y)
+
+		if copy_board.IsWin() {
+			hash := copy_board.Hash()
+
+			if _, exists := solutions[hash]; !exists {
+				solutions[hash] = copy_board
+			}
+			return
+		}
+
 		traverse(copy_board, solutions, counter)
 	}
 }
