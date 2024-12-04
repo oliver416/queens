@@ -3,9 +3,13 @@ package main
 
 import "fmt"
 
-func traverse(board Board, solutions *[]Board) {
+func traverse(board Board, solutions map[string]Board) {
 	if board.IsWin() {
-		*solutions = append(*solutions, board)
+		hash := board.Hash()
+
+		if _, exists := solutions[hash]; !exists {
+			solutions[hash] = board
+		}
 		return
 	}
 
@@ -19,32 +23,16 @@ func traverse(board Board, solutions *[]Board) {
 	}
 }
 
-func filter(solutions *[]Board) map[string]Board {
-	unique := map[string]Board{}
-
-	for _, board := range *solutions {
-		hash := board.Hash()
-
-		if _, exists := unique[hash]; !exists {
-			unique[hash] = board
-		}
-	}
-
-	return unique
-}
-
-
 func main() {
 	board := Board{}
 	board.Init(8)
 
-	solutions := []Board{}
-	traverse(board, &solutions)
-	filtered := filter(&solutions)
+	solutions := map[string]Board{}
+	traverse(board, solutions)
 
-	for _, board := range filtered {
+	for _, board := range solutions {
 		board.Show()
 	}
 
-	fmt.Printf("%d solitions found\n", len(filtered))
+	fmt.Printf("%d solitions found\n", len(solutions))
 }
