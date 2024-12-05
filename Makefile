@@ -1,5 +1,5 @@
 #!make
-.PHONY: run test
+.PHONY: run test swagger
 
 run:
 	go run queens
@@ -7,3 +7,7 @@ run:
 test:
 	go test queens/tests
 
+
+swagger:
+	go install github.com/swaggo/swag/cmd/swag@latest
+	~/go/bin/swag init -o ./app/docs
