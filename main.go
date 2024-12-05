@@ -1,9 +1,12 @@
 package main
 
 
-import "fmt"
+import (
+	"fmt"
+	q "queens/core/queens"
+)
 
-func traverse(board Board, solutions map[string]Board, counter *int) {
+func traverse(board q.Board, solutions map[string]q.Board, counter *int) {
 	*counter += 1
 
 	fields := board.FreeFields()
@@ -27,10 +30,10 @@ func traverse(board Board, solutions map[string]Board, counter *int) {
 }
 
 func main() {
-	board := Board{}
-	board.Init(8)
+	board := q.Board{}
+	board.Init(4)
 
-	solutions := map[string]Board{}
+	solutions := map[string]q.Board{}
 	counter := 0
 	traverse(board, solutions, &counter)
 

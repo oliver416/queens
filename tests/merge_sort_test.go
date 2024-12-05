@@ -3,7 +3,7 @@ package tests
 import (
 	"golang.org/x/exp/slices"
 	"testing"
-    "queens/array"
+    "queens/core/array"
 )
 
 func TestMerge(t *testing.T) {
