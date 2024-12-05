@@ -1,9 +1,9 @@
 package main
 
 import (
-	"queens/core/queens"
+	"queens/app"
 )
 
 func main() {
-	queens.Solve(4)
+	app.Run()
 }
