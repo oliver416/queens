@@ -27,6 +27,15 @@ var DB = []User{
 	{ID: 2, Name: "User3", Age: 30},
 }
 
+func ServerErrorHander(context *gin.Context) {
+	if r := recover(); r != nil {
+		context.JSON(
+			http.StatusInternalServerError,
+			gin.H{"error": "Internal server error"},
+		)
+	}
+}
+
 // Ping godoc
 // @Summary Ping
 // @Schemes
@@ -65,16 +74,11 @@ func GetUsers(context *gin.Context) {
 // @Produce json
 // @Param id path int true "User ID"
 // @Success 200 {object} User
+// @Failure 404
+// @Failure 500
 // @Router /users/{id} [get]
 func GetUser(context *gin.Context) {
-	defer func() {
-		if r := recover(); r != nil {
-			context.JSON(
-				http.StatusInternalServerError,
-				gin.H{"error": "Internal server error"},
-			)
-		}
-	}()
+	defer ServerErrorHander(context)
 
 	id, err := strconv.Atoi(context.Param("id"))
 
@@ -95,13 +99,16 @@ func GetUser(context *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body UserRequest true "User data"
-// @Success 200 {object} User
+// @Success 201 {object} User
+// @Failure 400
+// @Failure 500
 // @Router /users [post]
 func CreateUser(context *gin.Context) {
 	var request UserRequest
 
 	if err := context.BindJSON(&request); err != nil {
 		// TODO: add logging
+		// TODO: standardise error messages
 		context.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
 		return
 	}
@@ -116,6 +123,32 @@ func CreateUser(context *gin.Context) {
 	context.JSON(http.StatusCreated, user)
 }
 
+// DeleteUser godoc
+// @Summary Delete user
+// @Schemes
+// @Description Delete user
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param id path int true "User ID"
+// @Success 204
+// @Failure 400
+// @Failure 500
+// @Router /users/{id} [delete]
+func DeleteUser(context *gin.Context) {
+	defer ServerErrorHander(context)
+
+	id, err := strconv.Atoi(context.Param("id"))
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
+		return
+	}
+
+	DB = append(DB[:id], DB[id+1:]...)
+	context.Status(http.StatusNoContent)
+}
+
 func Run() {
 	app := gin.Default()
 	basePath := "/api/v1"
@@ -127,6 +160,7 @@ func Run() {
 		group.GET("/users", GetUsers)
 		group.GET("/users/:id", GetUser)
 		group.POST("/users", CreateUser)
+		group.DELETE("/users/:id", DeleteUser)
 	}
 
 	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
