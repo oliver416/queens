@@ -2,13 +2,13 @@ package tests
 
 import (
 	"golang.org/x/exp/slices"
+	"queens/core/array"
 	"testing"
-    "queens/core/array"
 )
 
 func TestDivideArray(t *testing.T) {
-    arr := []int{3, 1, 2, 2, 3, 1, 4, 2}
-    expected := []int{1, 2, 2, 1, 2, 3, 4, 3}
+	arr := []int{3, 1, 2, 2, 3, 1, 4, 2}
+	expected := []int{1, 2, 2, 1, 2, 3, 4, 3}
 
 	result, divider := array.DivideArray(arr)
 
@@ -16,15 +16,14 @@ func TestDivideArray(t *testing.T) {
 		t.Error(result)
 	}
 
-    if divider != 5 {
-        t.Error(divider)
-    }
+	if divider != 5 {
+		t.Error(divider)
+	}
 }
 
-
 func TestQuickSort(t *testing.T) {
-    arr := []int{3, 1, 2, 2, 3, 1, 4, 2}
-    expected := []int{1, 1, 2, 2, 2, 3, 3, 4}
+	arr := []int{3, 1, 2, 2, 3, 1, 4, 2}
+	expected := []int{1, 1, 2, 2, 2, 3, 3, 4}
 
 	result := array.QuickSort(arr)
 
@@ -32,4 +31,3 @@ func TestQuickSort(t *testing.T) {
 		t.Error(result)
 	}
 }
-

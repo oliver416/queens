@@ -7,7 +7,6 @@ import (
 
 const QUEEN = 8
 
-
 type Board struct {
 	size        int
 	horizontals [][]int
@@ -78,7 +77,7 @@ func (b *Board) Place(x int, y int) {
 	b.horizontals[x][y] = 8
 }
 
-func (b *Board) sum () int {
+func (b *Board) sum() int {
 	sum := 0
 
 	for _, horisontal := range b.horizontals {
@@ -90,7 +89,7 @@ func (b *Board) sum () int {
 	return sum
 }
 
-func (b *Board) FreeFields() [][]int{
+func (b *Board) FreeFields() [][]int {
 	free_fields := [][]int{}
 
 	for x, horisontal := range b.horizontals {
@@ -123,7 +122,7 @@ func (b *Board) Copy() Board {
 }
 
 func (b *Board) IsWin() bool {
-	return b.sum() == b.size * QUEEN + b.size * (b.size - 1)
+	return b.sum() == b.size*QUEEN+b.size*(b.size-1)
 }
 
 func (b *Board) Hash() string {
