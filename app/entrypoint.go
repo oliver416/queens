@@ -27,7 +27,7 @@ var DB = []User{
 	{ID: 2, Name: "User3", Age: 30},
 }
 
-func ServerErrorHander(context *gin.Context) {
+func ServerErrorHandler(context *gin.Context) {
 	if r := recover(); r != nil {
 		context.JSON(
 			http.StatusInternalServerError,
@@ -78,7 +78,7 @@ func GetUsers(context *gin.Context) {
 // @Failure 500
 // @Router /users/{id} [get]
 func GetUser(context *gin.Context) {
-	defer ServerErrorHander(context)
+	defer ServerErrorHandler(context)
 
 	id, err := strconv.Atoi(context.Param("id"))
 
@@ -136,7 +136,7 @@ func CreateUser(context *gin.Context) {
 // @Failure 500
 // @Router /users/{id} [delete]
 func DeleteUser(context *gin.Context) {
-	defer ServerErrorHander(context)
+	defer ServerErrorHandler(context)
 
 	id, err := strconv.Atoi(context.Param("id"))
 
@@ -148,6 +148,54 @@ func DeleteUser(context *gin.Context) {
 	DB = append(DB[:id], DB[id+1:]...)
 	context.Status(http.StatusNoContent)
 }
+
+// UpdateUser godoc
+// @Summary Update user
+// @Schemes
+// @Description Update user
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param id path int true "User ID"
+// @Param request body UserRequest true "User data"
+// @Success 200 {object} User
+// @Failure 400
+// @Failure 500
+// @Router /users/{id} [patch]
+func UpdateUser(context *gin.Context) {
+    defer ServerErrorHandler(context)
+
+	var request UserRequest
+
+	if err := context.BindJSON(&request); err != nil {
+		// TODO: add logging
+		// TODO: standardise error messages
+		context.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
+		return
+	}
+
+    ID, err := strconv.Atoi(context.Param("id"))
+
+    if err != nil {
+        context.JSON(http.StatusNotFound, gin.H{"error": "User has not found"})
+        return
+    }
+
+    user := DB[ID]
+
+    //TODO: how to avoid duplication??
+    if request.Name != "" {
+        user.Name = request.Name
+    }
+
+    if request.Age != 0 {
+        user.Age = request.Age
+    }
+
+    DB[ID] = user
+	context.JSON(http.StatusOK, user)
+}
+
 
 func Run() {
 	app := gin.Default()
@@ -161,6 +209,7 @@ func Run() {
 		group.GET("/users/:id", GetUser)
 		group.POST("/users", CreateUser)
 		group.DELETE("/users/:id", DeleteUser)
+		group.PATCH("/users/:id", UpdateUser)
 	}
 
 	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
