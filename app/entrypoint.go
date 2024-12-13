@@ -223,7 +223,6 @@ func Run() {
 		group.GET("/users/:id", GetUser)
 		group.POST("/users", CreateUser)
 		group.DELETE("/users/:id", DeleteUser)
-		group.PUT("/users/:id", UpdateUser)
 		group.PATCH("/users/:id", UpdateUser)
 	}
 
