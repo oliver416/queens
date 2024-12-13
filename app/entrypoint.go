@@ -83,7 +83,10 @@ func GetUser(context *gin.Context) {
 	id, err := strconv.Atoi(context.Param("id"))
 
 	if err != nil {
-		context.JSON(http.StatusNotFound, gin.H{"error": "User is not found"})
+		context.JSON(
+			http.StatusNotFound,
+			gin.H{"error": "User is not found"},
+		)
 		return
 	}
 
@@ -109,7 +112,10 @@ func CreateUser(context *gin.Context) {
 	if err := context.BindJSON(&request); err != nil {
 		// TODO: add logging
 		// TODO: standardise error messages
-		context.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
+		context.JSON(
+			http.StatusBadRequest,
+			gin.H{"error": "bad request"},
+		)
 		return
 	}
 
@@ -141,7 +147,10 @@ func DeleteUser(context *gin.Context) {
 	id, err := strconv.Atoi(context.Param("id"))
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
+		context.JSON(
+			http.StatusBadRequest,
+			gin.H{"error": "bad request"},
+		)
 		return
 	}
 
@@ -163,39 +172,44 @@ func DeleteUser(context *gin.Context) {
 // @Failure 500
 // @Router /users/{id} [patch]
 func UpdateUser(context *gin.Context) {
-    defer ServerErrorHandler(context)
+	defer ServerErrorHandler(context)
 
 	var request UserRequest
 
 	if err := context.BindJSON(&request); err != nil {
 		// TODO: add logging
 		// TODO: standardise error messages
-		context.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
+		context.JSON(
+			http.StatusBadRequest,
+			gin.H{"error": "bad request"},
+		)
 		return
 	}
 
-    ID, err := strconv.Atoi(context.Param("id"))
+	ID, err := strconv.Atoi(context.Param("id"))
 
-    if err != nil {
-        context.JSON(http.StatusNotFound, gin.H{"error": "User has not found"})
-        return
-    }
+	if err != nil {
+		context.JSON(
+			http.StatusNotFound,
+			gin.H{"error": "User has not found"},
+		)
+		return
+	}
 
-    user := DB[ID]
+	user := DB[ID]
 
-    //TODO: how to avoid duplication??
-    if request.Name != "" {
-        user.Name = request.Name
-    }
+	//TODO: how to avoid duplication??
+	if request.Name != "" {
+		user.Name = request.Name
+	}
 
-    if request.Age != 0 {
-        user.Age = request.Age
-    }
+	if request.Age != 0 {
+		user.Age = request.Age
+	}
 
-    DB[ID] = user
+	DB[ID] = user
 	context.JSON(http.StatusOK, user)
 }
-
 
 func Run() {
 	app := gin.Default()
@@ -209,9 +223,13 @@ func Run() {
 		group.GET("/users/:id", GetUser)
 		group.POST("/users", CreateUser)
 		group.DELETE("/users/:id", DeleteUser)
+		group.PUT("/users/:id", UpdateUser)
 		group.PATCH("/users/:id", UpdateUser)
 	}
 
-	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	app.GET(
+		"/swagger/*any",
+		ginSwagger.WrapHandler(swaggerFiles.Handler),
+	)
 	app.Run()
 }
