@@ -57,7 +57,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/app.User"
+                                "$ref": "#/definitions/entities.User"
                             }
                         }
                     }
@@ -90,7 +90,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/app.User"
+                            "$ref": "#/definitions/entities.User"
                         }
                     },
                     "400": {
@@ -128,7 +128,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/app.User"
+                            "$ref": "#/definitions/entities.User"
                         }
                     },
                     "404": {
@@ -206,7 +206,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/app.User"
+                            "$ref": "#/definitions/entities.User"
                         }
                     },
                     "400": {
@@ -220,13 +220,10 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "app.User": {
+        "app.UserRequest": {
             "type": "object",
             "properties": {
                 "age": {
-                    "type": "integer"
-                },
-                "id": {
                     "type": "integer"
                 },
                 "name": {
@@ -234,10 +231,13 @@ const docTemplate = `{
                 }
             }
         },
-        "app.UserRequest": {
+        "entities.User": {
             "type": "object",
             "properties": {
                 "age": {
+                    "type": "integer"
+                },
+                "id": {
                     "type": "integer"
                 },
                 "name": {

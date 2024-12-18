@@ -6,22 +6,17 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 	"net/http"
 	docs "queens/app/docs"
+	"queens/app/entities"
 	"strconv"
 )
 
-type User struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Age  int    `json:"age"`
-}
-
-// TODO: there is some duplication between the structures
+// TODO: there is some duplication between the structures User and UserRequest
 type UserRequest struct {
 	Name string `json:"name"`
 	Age  int    `json:"age"`
 }
 
-var DB = []User{
+var DB = []entities.User{
 	{ID: 0, Name: "User1", Age: 10},
 	{ID: 1, Name: "User2", Age: 20},
 	{ID: 2, Name: "User3", Age: 30},
@@ -59,7 +54,7 @@ func handler(context *gin.Context) {
 // @Tags users
 // @Accept json
 // @Produce json
-// @Success 200 {array} User
+// @Success 200 {array} entities.User
 // @Router /users [get]
 func GetUsers(context *gin.Context) {
 	context.JSON(http.StatusOK, DB)
@@ -73,7 +68,7 @@ func GetUsers(context *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "User ID"
-// @Success 200 {object} User
+// @Success 200 {object} entities.User
 // @Failure 404
 // @Failure 500
 // @Router /users/{id} [get]
@@ -102,7 +97,7 @@ func GetUser(context *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body UserRequest true "User data"
-// @Success 201 {object} User
+// @Success 201 {object} entities.User
 // @Failure 400
 // @Failure 500
 // @Router /users [post]
@@ -120,7 +115,7 @@ func CreateUser(context *gin.Context) {
 	}
 
 	ID := len(DB)
-	user := User{
+	user := entities.User{
 		ID:   ID,
 		Name: request.Name,
 		Age:  request.Age,
@@ -167,7 +162,7 @@ func DeleteUser(context *gin.Context) {
 // @Produce json
 // @Param id path int true "User ID"
 // @Param request body UserRequest true "User data"
-// @Success 200 {object} User
+// @Success 200 {object} entities.User
 // @Failure 400
 // @Failure 500
 // @Router /users/{id} [patch]
