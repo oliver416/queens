@@ -13,4 +13,5 @@ swagger:
 	~/go/bin/swag init -o ./app/docs
 
 format:
+	go vet
 	go fmt ./...
