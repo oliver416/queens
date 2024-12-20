@@ -1,12 +1,22 @@
 package interfaces
 
-import "queens/app/entities"
+type UserDB struct {
+	// TODO: int ID is not abstract!!
+	ID   int
+	Name string
+	Age  int
+}
+
+// TODO: there is some duplication between the structures User and UserRequest
+type UserRequest struct {
+	Name string
+	Age  int
+}
 
 type UserRepository interface {
-	// TODO: direct access to entities!!!
-	AddUser(id any, user entities.User)
-	GetUserByID(id any)
-	UpdateUser(id any, user entities.User)
+	AddUser(request UserRequest) UserDB
+	GetUserByID(id any) UserDB
+	UpdateUser(id any, request UserRequest)
 	DeleteUser(id any)
-	GetUsers() []entities.User
+	GetUsers() []UserDB
 }
