@@ -6,20 +6,13 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 	"net/http"
 	docs "queens/app/docs"
-	"queens/app/entities"
 	"queens/app/repositories"
 	"strconv"
 )
 
-var DB = []entities.User{
-	{ID: 0, Name: "User1", Age: 10},
-	{ID: 1, Name: "User2", Age: 20},
-	{ID: 2, Name: "User3", Age: 30},
+type GinController struct {
+	Repo repositories.InMemoryRepository
 }
-
-var Repo = repositories.InMemoryRepository{DB: DB}
-
-type GinController struct{}
 
 func (g *GinController) ServerErrorHandler(context *gin.Context) {
 	if r := recover(); r != nil {
@@ -56,7 +49,7 @@ func (g *GinController) handler(context *gin.Context) {
 // @Success 200 {array} entities.User
 // @Router /users [get]
 func (g *GinController) GetUsers(context *gin.Context) {
-	users := Repo.GetUsers()
+	users := g.Repo.GetUsers()
 	context.JSON(http.StatusOK, users)
 }
 
@@ -85,7 +78,7 @@ func (g *GinController) GetUser(context *gin.Context) {
 		return
 	}
 
-	user := Repo.GetUserByID(id)
+	user := g.Repo.GetUserByID(id)
 	context.JSON(http.StatusOK, user)
 }
 
@@ -114,7 +107,7 @@ func (g *GinController) CreateUser(context *gin.Context) {
 		return
 	}
 
-	user := Repo.CreateUser(request)
+	user := g.Repo.CreateUser(request)
 	context.JSON(http.StatusCreated, user)
 }
 
@@ -143,7 +136,7 @@ func (g *GinController) DeleteUser(context *gin.Context) {
 		return
 	}
 
-	Repo.DeleteUser(id)
+	g.Repo.DeleteUser(id)
 	context.Status(http.StatusNoContent)
 }
 
@@ -185,7 +178,7 @@ func (g *GinController) UpdateUser(context *gin.Context) {
 		return
 	}
 
-	user := Repo.UpdateUser(ID, request)
+	user := g.Repo.UpdateUser(ID, request)
 	context.JSON(http.StatusOK, user)
 }
 
