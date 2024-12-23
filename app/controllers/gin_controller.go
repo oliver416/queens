@@ -6,12 +6,14 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 	"net/http"
 	docs "queens/app/docs"
+	// TODO: direct access to repositories
 	"queens/app/repositories"
+	"queens/app/use_cases"
 	"strconv"
 )
 
 type GinController struct {
-	Repo repositories.InMemoryRepository
+	Interactor use_cases.UserInteractor
 }
 
 func (g *GinController) ServerErrorHandler(context *gin.Context) {
@@ -49,7 +51,7 @@ func (g *GinController) handler(context *gin.Context) {
 // @Success 200 {array} entities.User
 // @Router /users [get]
 func (g *GinController) GetUsers(context *gin.Context) {
-	users := g.Repo.GetUsers()
+	users := g.Interactor.GetUsers()
 	context.JSON(http.StatusOK, users)
 }
 
@@ -78,7 +80,7 @@ func (g *GinController) GetUser(context *gin.Context) {
 		return
 	}
 
-	user := g.Repo.GetUserByID(id)
+	user := g.Interactor.GetUserByID(id)
 	context.JSON(http.StatusOK, user)
 }
 
@@ -107,7 +109,7 @@ func (g *GinController) CreateUser(context *gin.Context) {
 		return
 	}
 
-	user := g.Repo.CreateUser(request)
+	user := g.Interactor.CreateUser(request)
 	context.JSON(http.StatusCreated, user)
 }
 
@@ -136,7 +138,7 @@ func (g *GinController) DeleteUser(context *gin.Context) {
 		return
 	}
 
-	g.Repo.DeleteUser(id)
+	g.Interactor.DeleteUser(id)
 	context.Status(http.StatusNoContent)
 }
 
@@ -178,7 +180,7 @@ func (g *GinController) UpdateUser(context *gin.Context) {
 		return
 	}
 
-	user := g.Repo.UpdateUser(ID, request)
+	user := g.Interactor.UpdateUser(ID, request)
 	context.JSON(http.StatusOK, user)
 }
 

@@ -4,6 +4,7 @@ import (
 	"queens/app/controllers"
 	"queens/app/entities"
 	"queens/app/repositories"
+	"queens/app/use_cases"
 )
 
 func Run() {
@@ -14,6 +15,7 @@ func Run() {
 	}
 
 	repository := repositories.InMemoryRepository{DB: DB}
-	controller := controllers.GinController{Repo: repository}
+	interactor := use_cases.UserInteractor{Repo: repository}
+	controller := controllers.GinController{Interactor: interactor}
 	controller.Run()
 }
