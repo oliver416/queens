@@ -71,7 +71,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/app.UserRequest"
+                            "$ref": "#/definitions/repositories.UserRequest"
                         }
                     }
                 ],
@@ -187,7 +187,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/app.UserRequest"
+                            "$ref": "#/definitions/repositories.UserRequest"
                         }
                     }
                 ],
@@ -209,17 +209,6 @@
         }
     },
     "definitions": {
-        "app.UserRequest": {
-            "type": "object",
-            "properties": {
-                "age": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
         "entities.User": {
             "type": "object",
             "properties": {
@@ -227,6 +216,17 @@
                     "type": "integer"
                 },
                 "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "repositories.UserRequest": {
+            "type": "object",
+            "properties": {
+                "age": {
                     "type": "integer"
                 },
                 "name": {

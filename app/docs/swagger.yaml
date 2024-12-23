@@ -1,16 +1,16 @@
 definitions:
-  app.UserRequest:
-    properties:
-      age:
-        type: integer
-      name:
-        type: string
-    type: object
   entities.User:
     properties:
       age:
         type: integer
       id:
+        type: integer
+      name:
+        type: string
+    type: object
+  repositories.UserRequest:
+    properties:
+      age:
         type: integer
       name:
         type: string
@@ -60,7 +60,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/app.UserRequest'
+          $ref: '#/definitions/repositories.UserRequest'
       produces:
       - application/json
       responses:
@@ -137,7 +137,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/app.UserRequest'
+          $ref: '#/definitions/repositories.UserRequest'
       produces:
       - application/json
       responses:

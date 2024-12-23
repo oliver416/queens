@@ -1,12 +1,21 @@
 package repositories
 
-import "queens/app/interfaces"
+// TODO: direct access to entities
+import "queens/app/entities"
+
+// TODO: there is some duplication between the structures User and UserRequest
+type UserRequest struct {
+	Name string `json:"name"`
+	Age  int    `json:"age"`
+}
 
 type InMemoryRepository struct {
 	// TODO: protect the DB???
-	DB []interfaces.UserDB
+	DB []entities.User
 }
 
+// TODO: UUID cannot be an ID in case of in-memory database, so the following
+// function is uselesss
 func (r *InMemoryRepository) AnyToInt(value any) *int {
 	number, ok := value.(int)
 
@@ -17,11 +26,11 @@ func (r *InMemoryRepository) AnyToInt(value any) *int {
 	return nil
 }
 
-func (r *InMemoryRepository) AddUser(
-	request interfaces.UserRequest,
-) interfaces.UserDB {
+func (r *InMemoryRepository) CreateUser(
+	request UserRequest,
+) entities.User {
 	ID := len(r.DB)
-	user := interfaces.UserDB{
+	user := entities.User{
 		ID:   ID,
 		Name: request.Name,
 		Age:  request.Age,
@@ -30,24 +39,24 @@ func (r *InMemoryRepository) AddUser(
 	return user
 }
 
-func (r *InMemoryRepository) GetUserByID(id any) interfaces.UserDB {
+func (r *InMemoryRepository) GetUserByID(id any) entities.User {
 	index := r.AnyToInt(id)
 
 	if index != nil {
 		return r.DB[*index]
 	}
 
-	return interfaces.UserDB{}
+	return entities.User{}
 }
 
 func (r *InMemoryRepository) UpdateUser(
 	id any,
-	request interfaces.UserRequest,
-) {
+	request UserRequest,
+) entities.User {
 	index := r.AnyToInt(id)
 
 	if index == nil {
-		return
+		return entities.User{}
 	}
 
 	user := &r.DB[*index]
@@ -60,6 +69,8 @@ func (r *InMemoryRepository) UpdateUser(
 	if request.Age != 0 {
 		user.Age = request.Age
 	}
+
+	return *user
 }
 
 func (r *InMemoryRepository) DeleteUser(id any) {
@@ -72,6 +83,6 @@ func (r *InMemoryRepository) DeleteUser(id any) {
 	r.DB = append(r.DB[:*index], r.DB[*index+1:]...)
 }
 
-func (r *InMemoryRepository) GetUsers() []interfaces.UserDB {
+func (r *InMemoryRepository) GetUsers() []entities.User {
 	return r.DB
 }

@@ -7,20 +7,17 @@ import (
 	"net/http"
 	docs "queens/app/docs"
 	"queens/app/entities"
+	"queens/app/repositories"
 	"strconv"
 )
-
-// TODO: there is some duplication between the structures User and UserRequest
-type UserRequest struct {
-	Name string `json:"name"`
-	Age  int    `json:"age"`
-}
 
 var DB = []entities.User{
 	{ID: 0, Name: "User1", Age: 10},
 	{ID: 1, Name: "User2", Age: 20},
 	{ID: 2, Name: "User3", Age: 30},
 }
+
+var Repo = repositories.InMemoryRepository{DB: DB}
 
 func ServerErrorHandler(context *gin.Context) {
 	if r := recover(); r != nil {
@@ -57,7 +54,8 @@ func handler(context *gin.Context) {
 // @Success 200 {array} entities.User
 // @Router /users [get]
 func GetUsers(context *gin.Context) {
-	context.JSON(http.StatusOK, DB)
+	users := Repo.GetUsers()
+	context.JSON(http.StatusOK, users)
 }
 
 // GetUser godoc
@@ -85,7 +83,7 @@ func GetUser(context *gin.Context) {
 		return
 	}
 
-	user := DB[id]
+	user := Repo.GetUserByID(id)
 	context.JSON(http.StatusOK, user)
 }
 
@@ -96,13 +94,13 @@ func GetUser(context *gin.Context) {
 // @Tags users
 // @Accept json
 // @Produce json
-// @Param request body UserRequest true "User data"
+// @Param request body repositories.UserRequest true "User data"
 // @Success 201 {object} entities.User
 // @Failure 400
 // @Failure 500
 // @Router /users [post]
 func CreateUser(context *gin.Context) {
-	var request UserRequest
+	var request repositories.UserRequest
 
 	if err := context.BindJSON(&request); err != nil {
 		// TODO: add logging
@@ -114,13 +112,7 @@ func CreateUser(context *gin.Context) {
 		return
 	}
 
-	ID := len(DB)
-	user := entities.User{
-		ID:   ID,
-		Name: request.Name,
-		Age:  request.Age,
-	}
-	DB = append(DB, user)
+	user := Repo.CreateUser(request)
 	context.JSON(http.StatusCreated, user)
 }
 
@@ -149,7 +141,7 @@ func DeleteUser(context *gin.Context) {
 		return
 	}
 
-	DB = append(DB[:id], DB[id+1:]...)
+	Repo.DeleteUser(id)
 	context.Status(http.StatusNoContent)
 }
 
@@ -161,7 +153,7 @@ func DeleteUser(context *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "User ID"
-// @Param request body UserRequest true "User data"
+// @Param request body repositories.UserRequest true "User data"
 // @Success 200 {object} entities.User
 // @Failure 400
 // @Failure 500
@@ -169,7 +161,7 @@ func DeleteUser(context *gin.Context) {
 func UpdateUser(context *gin.Context) {
 	defer ServerErrorHandler(context)
 
-	var request UserRequest
+	var request repositories.UserRequest
 
 	if err := context.BindJSON(&request); err != nil {
 		// TODO: add logging
@@ -191,18 +183,7 @@ func UpdateUser(context *gin.Context) {
 		return
 	}
 
-	user := DB[ID]
-
-	//TODO: how to avoid duplication??
-	if request.Name != "" {
-		user.Name = request.Name
-	}
-
-	if request.Age != 0 {
-		user.Age = request.Age
-	}
-
-	DB[ID] = user
+	user := Repo.UpdateUser(ID, request)
 	context.JSON(http.StatusOK, user)
 }
 

@@ -82,7 +82,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/app.UserRequest"
+                            "$ref": "#/definitions/repositories.UserRequest"
                         }
                     }
                 ],
@@ -198,7 +198,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/app.UserRequest"
+                            "$ref": "#/definitions/repositories.UserRequest"
                         }
                     }
                 ],
@@ -220,17 +220,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "app.UserRequest": {
-            "type": "object",
-            "properties": {
-                "age": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
         "entities.User": {
             "type": "object",
             "properties": {
@@ -238,6 +227,17 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "repositories.UserRequest": {
+            "type": "object",
+            "properties": {
+                "age": {
                     "type": "integer"
                 },
                 "name": {
