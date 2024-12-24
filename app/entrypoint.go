@@ -6,7 +6,7 @@ import (
 )
 
 func Run() {
-	DB := []use_cases.UserResponse{
+	DB := []use_cases.DBUser{
 		{ID: 0, Name: "User1", Age: 10},
 		{ID: 1, Name: "User2", Age: 20},
 		{ID: 2, Name: "User3", Age: 30},
