@@ -1,17 +1,26 @@
 package use_cases
 
-import (
-	// TODO: repositories access
-	"queens/app/entities"
-	"queens/app/repositories"
-)
+import "queens/app/entities"
+
+type UserRequest struct {
+	Name string `json:"name"`
+	Age  int    `json:"age"`
+}
+
+type Repository interface {
+	CreateUser(request UserRequest) entities.User
+	GetUserByID(id any) entities.User
+	UpdateUser(id any, request UserRequest) entities.User
+	DeleteUser(id any)
+	GetUsers() []entities.User
+}
 
 type UserInteractor struct {
-	Repo repositories.InMemoryRepository
+	Repo Repository
 }
 
 func (u *UserInteractor) CreateUser(
-	request repositories.UserRequest,
+	request UserRequest,
 ) entities.User {
 	return u.Repo.CreateUser(request)
 }
@@ -22,7 +31,7 @@ func (u *UserInteractor) GetUserByID(id any) entities.User {
 
 func (u *UserInteractor) UpdateUser(
 	id any,
-	request repositories.UserRequest,
+	request UserRequest,
 ) entities.User {
 	return u.Repo.UpdateUser(id, request)
 }

@@ -15,7 +15,7 @@ func Run() {
 	}
 
 	repository := repositories.InMemoryRepository{DB: DB}
-	interactor := use_cases.UserInteractor{Repo: repository}
+	interactor := use_cases.UserInteractor{Repo: &repository}
 	controller := interfaces.GinController{Interactor: interactor}
 	controller.Run()
 }

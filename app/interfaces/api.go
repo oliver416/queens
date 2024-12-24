@@ -6,8 +6,6 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 	"net/http"
 	docs "queens/app/docs"
-	// TODO: direct access to repositories
-	"queens/app/repositories"
 	"queens/app/use_cases"
 	"strconv"
 )
@@ -91,13 +89,13 @@ func (g *GinController) GetUser(context *gin.Context) {
 // @Tags users
 // @Accept json
 // @Produce json
-// @Param request body repositories.UserRequest true "User data"
+// @Param request body use_cases.UserRequest true "User data"
 // @Success 201 {object} entities.User
 // @Failure 400
 // @Failure 500
 // @Router /users [post]
 func (g *GinController) CreateUser(context *gin.Context) {
-	var request repositories.UserRequest
+	var request use_cases.UserRequest
 
 	if err := context.BindJSON(&request); err != nil {
 		// TODO: add logging
@@ -150,7 +148,7 @@ func (g *GinController) DeleteUser(context *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "User ID"
-// @Param request body repositories.UserRequest true "User data"
+// @Param request body use_cases.UserRequest true "User data"
 // @Success 200 {object} entities.User
 // @Failure 400
 // @Failure 500
@@ -158,7 +156,7 @@ func (g *GinController) DeleteUser(context *gin.Context) {
 func (g *GinController) UpdateUser(context *gin.Context) {
 	defer g.ServerErrorHandler(context)
 
-	var request repositories.UserRequest
+	var request use_cases.UserRequest
 
 	if err := context.BindJSON(&request); err != nil {
 		// TODO: add logging

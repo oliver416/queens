@@ -2,12 +2,7 @@ package repositories
 
 // TODO: direct access to entities
 import "queens/app/entities"
-
-// TODO: there is some duplication between the structures User and UserRequest
-type UserRequest struct {
-	Name string `json:"name"`
-	Age  int    `json:"age"`
-}
+import "queens/app/use_cases"
 
 type InMemoryRepository struct {
 	// TODO: protect the DB???
@@ -27,7 +22,7 @@ func (r *InMemoryRepository) AnyToInt(value any) *int {
 }
 
 func (r *InMemoryRepository) CreateUser(
-	request UserRequest,
+	request use_cases.UserRequest,
 ) entities.User {
 	ID := len(r.DB)
 	user := entities.User{
@@ -51,7 +46,7 @@ func (r *InMemoryRepository) GetUserByID(id any) entities.User {
 
 func (r *InMemoryRepository) UpdateUser(
 	id any,
-	request UserRequest,
+	request use_cases.UserRequest,
 ) entities.User {
 	index := r.AnyToInt(id)
 
