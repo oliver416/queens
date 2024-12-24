@@ -1,8 +1,8 @@
 package app
 
 import (
-	"queens/app/controllers"
 	"queens/app/entities"
+	"queens/app/interfaces"
 	"queens/app/repositories"
 	"queens/app/use_cases"
 )
@@ -16,6 +16,6 @@ func Run() {
 
 	repository := repositories.InMemoryRepository{DB: DB}
 	interactor := use_cases.UserInteractor{Repo: repository}
-	controller := controllers.GinController{Interactor: interactor}
+	controller := interfaces.GinController{Interactor: interactor}
 	controller.Run()
 }
