@@ -1,9 +1,11 @@
 package use_cases
 
-// TODO: there is no need entities package at all((
+import "queens/app/entities"
+
 // TODO: use cases depend on JSON
 
 type UserRequest struct {
+	entities.User
 	Name string `json:"name"`
 	Age  int    `json:"age"`
 }
