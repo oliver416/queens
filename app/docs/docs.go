@@ -57,7 +57,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/use_cases.UserResponse"
+                                "$ref": "#/definitions/interfaces.UserResponse"
                             }
                         }
                     }
@@ -82,7 +82,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/use_cases.UserRequest"
+                            "$ref": "#/definitions/interfaces.UserRequest"
                         }
                     }
                 ],
@@ -90,7 +90,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/use_cases.UserResponse"
+                            "$ref": "#/definitions/interfaces.UserResponse"
                         }
                     },
                     "400": {
@@ -128,7 +128,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/use_cases.UserResponse"
+                            "$ref": "#/definitions/interfaces.UserResponse"
                         }
                     },
                     "404": {
@@ -198,7 +198,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/use_cases.UserRequest"
+                            "$ref": "#/definitions/interfaces.UserRequest"
                         }
                     }
                 ],
@@ -206,7 +206,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/use_cases.UserResponse"
+                            "$ref": "#/definitions/interfaces.UserResponse"
                         }
                     },
                     "400": {
@@ -220,7 +220,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "use_cases.UserRequest": {
+        "interfaces.UserRequest": {
             "type": "object",
             "properties": {
                 "age": {
@@ -231,7 +231,7 @@ const docTemplate = `{
                 }
             }
         },
-        "use_cases.UserResponse": {
+        "interfaces.UserResponse": {
             "type": "object",
             "properties": {
                 "age": {

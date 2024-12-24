@@ -46,7 +46,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/use_cases.UserResponse"
+                                "$ref": "#/definitions/interfaces.UserResponse"
                             }
                         }
                     }
@@ -71,7 +71,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/use_cases.UserRequest"
+                            "$ref": "#/definitions/interfaces.UserRequest"
                         }
                     }
                 ],
@@ -79,7 +79,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/use_cases.UserResponse"
+                            "$ref": "#/definitions/interfaces.UserResponse"
                         }
                     },
                     "400": {
@@ -117,7 +117,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/use_cases.UserResponse"
+                            "$ref": "#/definitions/interfaces.UserResponse"
                         }
                     },
                     "404": {
@@ -187,7 +187,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/use_cases.UserRequest"
+                            "$ref": "#/definitions/interfaces.UserRequest"
                         }
                     }
                 ],
@@ -195,7 +195,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/use_cases.UserResponse"
+                            "$ref": "#/definitions/interfaces.UserResponse"
                         }
                     },
                     "400": {
@@ -209,7 +209,7 @@
         }
     },
     "definitions": {
-        "use_cases.UserRequest": {
+        "interfaces.UserRequest": {
             "type": "object",
             "properties": {
                 "age": {
@@ -220,7 +220,7 @@
                 }
             }
         },
-        "use_cases.UserResponse": {
+        "interfaces.UserResponse": {
             "type": "object",
             "properties": {
                 "age": {
