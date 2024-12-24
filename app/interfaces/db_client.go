@@ -1,4 +1,4 @@
-package repositories
+package interfaces
 
 // TODO: direct access to entities
 import "queens/app/entities"

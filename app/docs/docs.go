@@ -82,7 +82,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/repositories.UserRequest"
+                            "$ref": "#/definitions/use_cases.UserRequest"
                         }
                     }
                 ],
@@ -198,7 +198,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/repositories.UserRequest"
+                            "$ref": "#/definitions/use_cases.UserRequest"
                         }
                     }
                 ],
@@ -234,7 +234,7 @@ const docTemplate = `{
                 }
             }
         },
-        "repositories.UserRequest": {
+        "use_cases.UserRequest": {
             "type": "object",
             "properties": {
                 "age": {

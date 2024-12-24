@@ -71,7 +71,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/repositories.UserRequest"
+                            "$ref": "#/definitions/use_cases.UserRequest"
                         }
                     }
                 ],
@@ -187,7 +187,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/repositories.UserRequest"
+                            "$ref": "#/definitions/use_cases.UserRequest"
                         }
                     }
                 ],
@@ -223,7 +223,7 @@
                 }
             }
         },
-        "repositories.UserRequest": {
+        "use_cases.UserRequest": {
             "type": "object",
             "properties": {
                 "age": {
