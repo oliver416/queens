@@ -4,14 +4,14 @@ package interfaces
 import "queens/app/entities"
 import "queens/app/use_cases"
 
-type InMemoryRepository struct {
+type InMemoryDBClient struct {
 	// TODO: protect the DB???
 	DB []entities.User
 }
 
 // TODO: UUID cannot be an ID in case of in-memory database, so the following
 // function is uselesss
-func (r *InMemoryRepository) AnyToInt(value any) *int {
+func (r *InMemoryDBClient) AnyToInt(value any) *int {
 	number, ok := value.(int)
 
 	if ok {
@@ -21,7 +21,7 @@ func (r *InMemoryRepository) AnyToInt(value any) *int {
 	return nil
 }
 
-func (r *InMemoryRepository) CreateUser(
+func (r *InMemoryDBClient) CreateUser(
 	request use_cases.UserRequest,
 ) entities.User {
 	ID := len(r.DB)
@@ -34,7 +34,7 @@ func (r *InMemoryRepository) CreateUser(
 	return user
 }
 
-func (r *InMemoryRepository) GetUserByID(id any) entities.User {
+func (r *InMemoryDBClient) GetUserByID(id any) entities.User {
 	index := r.AnyToInt(id)
 
 	if index != nil {
@@ -44,7 +44,7 @@ func (r *InMemoryRepository) GetUserByID(id any) entities.User {
 	return entities.User{}
 }
 
-func (r *InMemoryRepository) UpdateUser(
+func (r *InMemoryDBClient) UpdateUser(
 	id any,
 	request use_cases.UserRequest,
 ) entities.User {
@@ -68,7 +68,7 @@ func (r *InMemoryRepository) UpdateUser(
 	return *user
 }
 
-func (r *InMemoryRepository) DeleteUser(id any) {
+func (r *InMemoryDBClient) DeleteUser(id any) {
 	index := r.AnyToInt(id)
 
 	if index == nil {
@@ -78,6 +78,6 @@ func (r *InMemoryRepository) DeleteUser(id any) {
 	r.DB = append(r.DB[:*index], r.DB[*index+1:]...)
 }
 
-func (r *InMemoryRepository) GetUsers() []entities.User {
+func (r *InMemoryDBClient) GetUsers() []entities.User {
 	return r.DB
 }

@@ -7,7 +7,7 @@ type UserRequest struct {
 	Age  int    `json:"age"`
 }
 
-type Repository interface {
+type DBClient interface {
 	CreateUser(request UserRequest) entities.User
 	GetUserByID(id any) entities.User
 	UpdateUser(id any, request UserRequest) entities.User
@@ -16,30 +16,30 @@ type Repository interface {
 }
 
 type UserInteractor struct {
-	Repo Repository
+	DBClient DBClient
 }
 
 func (u *UserInteractor) CreateUser(
 	request UserRequest,
 ) entities.User {
-	return u.Repo.CreateUser(request)
+	return u.DBClient.CreateUser(request)
 }
 
 func (u *UserInteractor) GetUserByID(id any) entities.User {
-	return u.Repo.GetUserByID(id)
+	return u.DBClient.GetUserByID(id)
 }
 
 func (u *UserInteractor) UpdateUser(
 	id any,
 	request UserRequest,
 ) entities.User {
-	return u.Repo.UpdateUser(id, request)
+	return u.DBClient.UpdateUser(id, request)
 }
 
 func (u *UserInteractor) DeleteUser(id any) {
-	u.Repo.DeleteUser(id)
+	u.DBClient.DeleteUser(id)
 }
 
 func (u *UserInteractor) GetUsers() []entities.User {
-	return u.Repo.GetUsers()
+	return u.DBClient.GetUsers()
 }

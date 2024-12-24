@@ -13,8 +13,8 @@ func Run() {
 		{ID: 2, Name: "User3", Age: 30},
 	}
 
-	repository := interfaces.InMemoryRepository{DB: DB}
-	interactor := use_cases.UserInteractor{Repo: &repository}
+	db_client := interfaces.InMemoryDBClient{DB: DB}
+	interactor := use_cases.UserInteractor{DBClient: &db_client}
 	controller := interfaces.GinController{Interactor: interactor}
 	controller.Run()
 }
