@@ -46,7 +46,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/entities.User"
+                                "$ref": "#/definitions/use_cases.UserResponse"
                             }
                         }
                     }
@@ -79,7 +79,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/entities.User"
+                            "$ref": "#/definitions/use_cases.UserResponse"
                         }
                     },
                     "400": {
@@ -117,7 +117,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entities.User"
+                            "$ref": "#/definitions/use_cases.UserResponse"
                         }
                     },
                     "404": {
@@ -195,7 +195,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entities.User"
+                            "$ref": "#/definitions/use_cases.UserResponse"
                         }
                     },
                     "400": {
@@ -209,13 +209,10 @@
         }
     },
     "definitions": {
-        "entities.User": {
+        "use_cases.UserRequest": {
             "type": "object",
             "properties": {
                 "age": {
-                    "type": "integer"
-                },
-                "id": {
                     "type": "integer"
                 },
                 "name": {
@@ -223,10 +220,13 @@
                 }
             }
         },
-        "use_cases.UserRequest": {
+        "use_cases.UserResponse": {
             "type": "object",
             "properties": {
                 "age": {
+                    "type": "integer"
+                },
+                "id": {
                     "type": "integer"
                 },
                 "name": {

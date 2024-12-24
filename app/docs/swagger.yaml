@@ -1,16 +1,16 @@
 definitions:
-  entities.User:
+  use_cases.UserRequest:
     properties:
       age:
-        type: integer
-      id:
         type: integer
       name:
         type: string
     type: object
-  use_cases.UserRequest:
+  use_cases.UserResponse:
     properties:
       age:
+        type: integer
+      id:
         type: integer
       name:
         type: string
@@ -45,7 +45,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/entities.User'
+              $ref: '#/definitions/use_cases.UserResponse'
             type: array
       summary: Get users
       tags:
@@ -67,7 +67,7 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/entities.User'
+            $ref: '#/definitions/use_cases.UserResponse'
         "400":
           description: Bad Request
         "500":
@@ -114,7 +114,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/entities.User'
+            $ref: '#/definitions/use_cases.UserResponse'
         "404":
           description: Not Found
         "500":
@@ -144,7 +144,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/entities.User'
+            $ref: '#/definitions/use_cases.UserResponse'
         "400":
           description: Bad Request
         "500":

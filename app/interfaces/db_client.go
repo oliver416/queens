@@ -1,12 +1,10 @@
 package interfaces
 
-// TODO: direct access to entities
-import "queens/app/entities"
 import "queens/app/use_cases"
 
 type InMemoryDBClient struct {
 	// TODO: protect the DB???
-	DB []entities.User
+	DB []use_cases.UserResponse
 }
 
 // TODO: UUID cannot be an ID in case of in-memory database, so the following
@@ -23,9 +21,9 @@ func (r *InMemoryDBClient) AnyToInt(value any) *int {
 
 func (r *InMemoryDBClient) CreateUser(
 	request use_cases.UserRequest,
-) entities.User {
+) use_cases.UserResponse {
 	ID := len(r.DB)
-	user := entities.User{
+	user := use_cases.UserResponse{
 		ID:   ID,
 		Name: request.Name,
 		Age:  request.Age,
@@ -34,24 +32,24 @@ func (r *InMemoryDBClient) CreateUser(
 	return user
 }
 
-func (r *InMemoryDBClient) GetUserByID(id any) entities.User {
+func (r *InMemoryDBClient) GetUserByID(id any) use_cases.UserResponse {
 	index := r.AnyToInt(id)
 
 	if index != nil {
 		return r.DB[*index]
 	}
 
-	return entities.User{}
+	return use_cases.UserResponse{}
 }
 
 func (r *InMemoryDBClient) UpdateUser(
 	id any,
 	request use_cases.UserRequest,
-) entities.User {
+) use_cases.UserResponse {
 	index := r.AnyToInt(id)
 
 	if index == nil {
-		return entities.User{}
+		return use_cases.UserResponse{}
 	}
 
 	user := &r.DB[*index]
@@ -78,6 +76,6 @@ func (r *InMemoryDBClient) DeleteUser(id any) {
 	r.DB = append(r.DB[:*index], r.DB[*index+1:]...)
 }
 
-func (r *InMemoryDBClient) GetUsers() []entities.User {
+func (r *InMemoryDBClient) GetUsers() []use_cases.UserResponse {
 	return r.DB
 }

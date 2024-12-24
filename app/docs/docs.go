@@ -57,7 +57,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/entities.User"
+                                "$ref": "#/definitions/use_cases.UserResponse"
                             }
                         }
                     }
@@ -90,7 +90,7 @@ const docTemplate = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/entities.User"
+                            "$ref": "#/definitions/use_cases.UserResponse"
                         }
                     },
                     "400": {
@@ -128,7 +128,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entities.User"
+                            "$ref": "#/definitions/use_cases.UserResponse"
                         }
                     },
                     "404": {
@@ -206,7 +206,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/entities.User"
+                            "$ref": "#/definitions/use_cases.UserResponse"
                         }
                     },
                     "400": {
@@ -220,13 +220,10 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "entities.User": {
+        "use_cases.UserRequest": {
             "type": "object",
             "properties": {
                 "age": {
-                    "type": "integer"
-                },
-                "id": {
                     "type": "integer"
                 },
                 "name": {
@@ -234,10 +231,13 @@ const docTemplate = `{
                 }
             }
         },
-        "use_cases.UserRequest": {
+        "use_cases.UserResponse": {
             "type": "object",
             "properties": {
                 "age": {
+                    "type": "integer"
+                },
+                "id": {
                     "type": "integer"
                 },
                 "name": {

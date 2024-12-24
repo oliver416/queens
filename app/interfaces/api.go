@@ -46,7 +46,7 @@ func (g *GinController) handler(context *gin.Context) {
 // @Tags users
 // @Accept json
 // @Produce json
-// @Success 200 {array} entities.User
+// @Success 200 {array} use_cases.UserResponse
 // @Router /users [get]
 func (g *GinController) GetUsers(context *gin.Context) {
 	users := g.Interactor.GetUsers()
@@ -61,7 +61,7 @@ func (g *GinController) GetUsers(context *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "User ID"
-// @Success 200 {object} entities.User
+// @Success 200 {object} use_cases.UserResponse
 // @Failure 404
 // @Failure 500
 // @Router /users/{id} [get]
@@ -90,7 +90,7 @@ func (g *GinController) GetUser(context *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param request body use_cases.UserRequest true "User data"
-// @Success 201 {object} entities.User
+// @Success 201 {object} use_cases.UserResponse
 // @Failure 400
 // @Failure 500
 // @Router /users [post]
@@ -149,7 +149,7 @@ func (g *GinController) DeleteUser(context *gin.Context) {
 // @Produce json
 // @Param id path int true "User ID"
 // @Param request body use_cases.UserRequest true "User data"
-// @Success 200 {object} entities.User
+// @Success 200 {object} use_cases.UserResponse
 // @Failure 400
 // @Failure 500
 // @Router /users/{id} [patch]

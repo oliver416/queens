@@ -1,13 +1,12 @@
 package app
 
 import (
-	"queens/app/entities"
 	"queens/app/interfaces"
 	"queens/app/use_cases"
 )
 
 func Run() {
-	DB := []entities.User{
+	DB := []use_cases.UserResponse{
 		{ID: 0, Name: "User1", Age: 10},
 		{ID: 1, Name: "User2", Age: 20},
 		{ID: 2, Name: "User3", Age: 30},
