@@ -1,6 +1,8 @@
 package use_cases
 
 // TODO: there is no need entities package at all((
+// TODO: use cases depend on JSON
+// TODO: use cases depend on User ID type int
 
 type UserRequest struct {
 	Name string `json:"name"`

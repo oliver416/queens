@@ -3,7 +3,6 @@ package interfaces
 import "queens/app/use_cases"
 
 type InMemoryDBClient struct {
-	// TODO: protect the DB???
 	DB []use_cases.UserResponse
 }
 
