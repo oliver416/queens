@@ -11,6 +11,7 @@ import (
 )
 
 type UserRequest struct {
+	use_cases.UserRequest
 	Name string `json:"name"`
 	Age  int    `json:"age"`
 }
@@ -106,7 +107,7 @@ func (g *GinController) GetUser(context *gin.Context) {
 // @Failure 500
 // @Router /users [post]
 func (g *GinController) CreateUser(context *gin.Context) {
-	var request use_cases.UserRequest
+	var request UserRequest
 
 	if err := context.BindJSON(&request); err != nil {
 		// TODO: add logging
@@ -118,7 +119,12 @@ func (g *GinController) CreateUser(context *gin.Context) {
 		return
 	}
 
-	user := g.Interactor.CreateUser(request)
+	// TODO: it looks like some sort of duplication
+	userRequest := use_cases.UserRequest{
+		Name: request.Name,
+		Age:  request.Age,
+	}
+	user := g.Interactor.CreateUser(userRequest)
 	context.JSON(http.StatusCreated, user)
 }
 
@@ -167,7 +173,7 @@ func (g *GinController) DeleteUser(context *gin.Context) {
 func (g *GinController) UpdateUser(context *gin.Context) {
 	defer g.ServerErrorHandler(context)
 
-	var request use_cases.UserRequest
+	var request UserRequest
 
 	if err := context.BindJSON(&request); err != nil {
 		// TODO: add logging
@@ -189,7 +195,12 @@ func (g *GinController) UpdateUser(context *gin.Context) {
 		return
 	}
 
-	user := g.Interactor.UpdateUser(ID, request)
+	// TODO: duplication in CreateUser
+	userRequest := use_cases.UserRequest{
+		Name: request.Name,
+		Age:  request.Age,
+	}
+	user := g.Interactor.UpdateUser(ID, userRequest)
 	context.JSON(http.StatusOK, user)
 }
 

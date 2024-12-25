@@ -2,12 +2,10 @@ package use_cases
 
 import "queens/app/entities"
 
-// TODO: use cases depend on JSON
-
 type UserRequest struct {
 	entities.User
-	Name string `json:"name"`
-	Age  int    `json:"age"`
+	Name string
+	Age  int
 }
 
 type DBUser struct {
