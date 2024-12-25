@@ -2,15 +2,11 @@ package use_cases
 
 import "queens/app/entities"
 
-type User struct {
-	entities.User
-	Name string
-	Age  int
-}
+type User entities.User
 
 type DBUser struct {
 	// TODO: use cases depend on User ID type int
-	entities.User
+	User
 	ID   int
 	Name string
 	Age  int
