@@ -6,8 +6,6 @@ type InMemoryDBClient struct {
 	DB []use_cases.DBUser
 }
 
-// TODO: UUID cannot be an ID in case of in-memory database, so the following
-// function is uselesss
 func (r *InMemoryDBClient) AnyToInt(value any) *int {
 	number, ok := value.(int)
 

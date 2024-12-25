@@ -5,9 +5,8 @@ import "queens/app/entities"
 type User entities.User
 
 type DBUser struct {
-	// TODO: use cases depend on User ID type int
 	User
-	ID   int
+	ID   any
 	Name string
 	Age  int
 }
