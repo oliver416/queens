@@ -14,6 +14,6 @@ func Run() {
 
 	db_client := interfaces.InMemoryDBClient{DB: DB}
 	interactor := use_cases.UserInteractor{DBClient: &db_client}
-	controller := interfaces.GinController{Interactor: interactor}
+	controller := interfaces.GinController{Interactor: &interactor}
 	controller.Run()
 }

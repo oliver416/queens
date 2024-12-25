@@ -10,8 +10,11 @@ import (
 	"strconv"
 )
 
+type User = use_cases.User
+type DBUser = use_cases.DBUser
+
 type UserRequest struct {
-	use_cases.User
+	User
 	Name string `json:"name"`
 	Age  int    `json:"age"`
 }
@@ -22,8 +25,16 @@ type UserResponse struct {
 	Age  int    `json:"age"`
 }
 
+type Interactor interface {
+	CreateUser(user User) DBUser
+	GetUserByID(id any) DBUser
+	UpdateUser(id any, user User) DBUser
+	DeleteUser(id any)
+	GetUsers() []DBUser
+}
+
 type GinController struct {
-	Interactor use_cases.UserInteractor
+	Interactor Interactor
 }
 
 func (g *GinController) ServerErrorHandler(context *gin.Context) {
@@ -120,7 +131,7 @@ func (g *GinController) CreateUser(context *gin.Context) {
 	}
 
 	// TODO: it looks like some sort of duplication
-	user := use_cases.User{
+	user := User{
 		Name: request.Name,
 		Age:  request.Age,
 	}
@@ -196,7 +207,7 @@ func (g *GinController) UpdateUser(context *gin.Context) {
 	}
 
 	// TODO: duplication in CreateUser
-	user := use_cases.User{
+	user := User{
 		Name: request.Name,
 		Age:  request.Age,
 	}
