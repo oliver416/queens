@@ -11,7 +11,7 @@ import (
 )
 
 type UserRequest struct {
-	use_cases.UserRequest
+	use_cases.User
 	Name string `json:"name"`
 	Age  int    `json:"age"`
 }
@@ -120,12 +120,12 @@ func (g *GinController) CreateUser(context *gin.Context) {
 	}
 
 	// TODO: it looks like some sort of duplication
-	userRequest := use_cases.UserRequest{
+	user := use_cases.User{
 		Name: request.Name,
 		Age:  request.Age,
 	}
-	user := g.Interactor.CreateUser(userRequest)
-	context.JSON(http.StatusCreated, user)
+	response := g.Interactor.CreateUser(user)
+	context.JSON(http.StatusCreated, response)
 }
 
 // DeleteUser godoc
@@ -196,12 +196,12 @@ func (g *GinController) UpdateUser(context *gin.Context) {
 	}
 
 	// TODO: duplication in CreateUser
-	userRequest := use_cases.UserRequest{
+	user := use_cases.User{
 		Name: request.Name,
 		Age:  request.Age,
 	}
-	user := g.Interactor.UpdateUser(ID, userRequest)
-	context.JSON(http.StatusOK, user)
+	response := g.Interactor.UpdateUser(ID, user)
+	context.JSON(http.StatusOK, response)
 }
 
 func (g *GinController) Run() {

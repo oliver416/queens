@@ -19,7 +19,7 @@ func (r *InMemoryDBClient) AnyToInt(value any) *int {
 }
 
 func (r *InMemoryDBClient) CreateUser(
-	request use_cases.UserRequest,
+	request use_cases.User,
 ) use_cases.DBUser {
 	ID := len(r.DB)
 	user := use_cases.DBUser{
@@ -43,7 +43,7 @@ func (r *InMemoryDBClient) GetUserByID(id any) use_cases.DBUser {
 
 func (r *InMemoryDBClient) UpdateUser(
 	id any,
-	request use_cases.UserRequest,
+	request use_cases.User,
 ) use_cases.DBUser {
 	index := r.AnyToInt(id)
 

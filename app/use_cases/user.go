@@ -2,7 +2,7 @@ package use_cases
 
 import "queens/app/entities"
 
-type UserRequest struct {
+type User struct {
 	entities.User
 	Name string
 	Age  int
@@ -10,15 +10,16 @@ type UserRequest struct {
 
 type DBUser struct {
 	// TODO: use cases depend on User ID type int
+	entities.User
 	ID   int
 	Name string
 	Age  int
 }
 
 type DBClient interface {
-	CreateUser(request UserRequest) DBUser
+	CreateUser(user User) DBUser
 	GetUserByID(id any) DBUser
-	UpdateUser(id any, request UserRequest) DBUser
+	UpdateUser(id any, user User) DBUser
 	DeleteUser(id any)
 	GetUsers() []DBUser
 }
@@ -27,21 +28,16 @@ type UserInteractor struct {
 	DBClient DBClient
 }
 
-func (u *UserInteractor) CreateUser(
-	request UserRequest,
-) DBUser {
-	return u.DBClient.CreateUser(request)
+func (u *UserInteractor) CreateUser(user User) DBUser {
+	return u.DBClient.CreateUser(user)
 }
 
 func (u *UserInteractor) GetUserByID(id any) DBUser {
 	return u.DBClient.GetUserByID(id)
 }
 
-func (u *UserInteractor) UpdateUser(
-	id any,
-	request UserRequest,
-) DBUser {
-	return u.DBClient.UpdateUser(id, request)
+func (u *UserInteractor) UpdateUser(id any, user User) DBUser {
+	return u.DBClient.UpdateUser(id, user)
 }
 
 func (u *UserInteractor) DeleteUser(id any) {
