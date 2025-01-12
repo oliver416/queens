@@ -5,7 +5,7 @@ run:
 	go run queens
 
 test:
-	go test queens/tests
+	go test -v queens/tests
 
 
 swagger:
